@@ -71,3 +71,4 @@ filter_files = true
 
 [tool.pyright]
 strict = ["discatcore/**"]
+ignore = ["tests/**"]
