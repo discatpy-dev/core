@@ -47,7 +47,7 @@ classifiers = [
 [tool.poetry.dependencies]
 python = ">=3.9"
 aiohttp = ">=3.6.0,<3.9.0"
-discord-typings = {git = "https://github.com/Bluenix2/discord-typings.git"}
+discord-typings = ">0.5.1"
 
 [tool.poetry.urls]
 "Bug Tracker" = "https://github.com/discatpy-dev/core/issues"
