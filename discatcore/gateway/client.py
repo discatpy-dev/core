@@ -18,6 +18,7 @@ from ..errors import GatewayReconnect
 from ..http import HTTPClient
 from ..utils.dispatcher import Dispatcher
 from ..utils.json import dumps, loads
+from .events import InvalidSessionEvent, ReconnectEvent, name_to_class
 from .ratelimiter import Ratelimiter
 from .types import BaseTypedWSMessage, is_binary, is_text
 
@@ -288,23 +289,21 @@ class GatewayClient:
                         self.session_id = ready_data["session_id"]
                         self.resume_url = ready_data["resume_gateway_url"]
 
-                    args = (data,)
-                    if data is None:
-                        args = ()
-                    self._dispatcher.dispatch(event_name, *args)
+                    event = name_to_class[event_name](data)
+                    await self._dispatcher.dispatch(event)
 
                 # these should be rare, but it's better to be safe than sorry
                 elif op == HEARTBEAT:
                     await self.heartbeat()
 
                 elif op == RECONNECT:
-                    self._dispatcher.dispatch("reconnect")
+                    await self._dispatcher.dispatch(ReconnectEvent())
                     await self.close(code=1012)
                     return
 
                 elif op == INVALID_SESSION:
                     self.can_resume = bool(self.recent_payload.get("d"))
-                    self._dispatcher.dispatch("invalid_session", self.can_resume)
+                    await self._dispatcher.dispatch(InvalidSessionEvent(self.can_resume))
                     await self.close(code=1012)
                     return
 

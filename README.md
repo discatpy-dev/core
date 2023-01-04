@@ -36,9 +36,10 @@ dispatcher = discatcore.Dispatcher()
 intents = 3243773
 gateway = discatcore.GatewayClient(http, dispatcher, intents=intents.value)
 
-@dispatcher.new_event("ready").callback
-async def ready(event: discord_typings.ReadyData):
-    print(event)
+# alternatively, you can provide the event type in the decorator
+@dispatcher.listen_to()
+async def ready(event: discatcore.gateway.ReadyEvent):
+    print(event.data)
 
 async def main():
     url: str | None = None

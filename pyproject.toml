@@ -47,6 +47,7 @@ classifiers = [
 [tool.poetry.dependencies]
 python = ">=3.9"
 aiohttp = ">=3.6.0,<3.9.0"
+attrs = "^22.1"
 discord-typings = {git = "https://github.com/Bluenix2/discord-typings.git"}
 
 [tool.poetry.urls]
