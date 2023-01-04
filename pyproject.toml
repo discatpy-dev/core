@@ -8,7 +8,7 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.poetry]
 name = "discatcore"
-version = "0.1.0"
+version = "0.2.0"
 description = "A lower level Discord API wrapper that functions as the core layer of DisCatPy."
 license = "MIT"
 authors = ["EmreTech <emreterzioglu49@gmail.com>"]
